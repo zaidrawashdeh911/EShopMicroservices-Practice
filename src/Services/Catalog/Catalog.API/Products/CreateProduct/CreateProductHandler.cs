@@ -16,7 +16,9 @@ public class CreateProductCommandValidator : AbstractValidator<CreateProductComm
     }
 }
 
-internal class CreateProductCommandHandler(IDocumentSession session, IValidator<CreateProductCommand> validator) : ICommandHandler<CreateProductCommand, CreateProductResult>
+internal class CreateProductCommandHandler
+    (IDocumentSession session, ILogger<CreateProductCommandHandler> logger)
+    : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
     {
@@ -25,13 +27,8 @@ internal class CreateProductCommandHandler(IDocumentSession session, IValidator<
         // Second step: Save it to the database
         // Third step: Return the CreateProductResult object
 
-        // Extra step: Validate the command object using the validator
-        var result = await validator.ValidateAsync(command, cancellationToken);
-        var erros = result.Errors.Select(x => x.ErrorMessage).ToList();
-        if (erros.Any())
-        {
-            throw new ValidationException(erros.FirstOrDefault());
-        }
+        //Logging the command received
+        logger.LogInformation("Received CreateProductCommand: {@Command}", command);
 
         // First step:
         var product = new Product
