@@ -4,6 +4,7 @@ using MediatR;
 
 namespace BuildingBlocks.Behaviors;
 
+// This validation behavior class works for commands only not for queries.
 public class ValidationBehavior<TRequest, TResponse>
     (IEnumerable<IValidator<TRequest>> validators)
     : IPipelineBehavior<TRequest, TResponse>

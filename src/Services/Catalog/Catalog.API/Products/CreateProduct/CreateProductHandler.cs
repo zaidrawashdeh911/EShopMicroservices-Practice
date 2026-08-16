@@ -17,7 +17,7 @@ public class CreateProductCommandValidator : AbstractValidator<CreateProductComm
 }
 
 internal class CreateProductCommandHandler
-    (IDocumentSession session, ILogger<CreateProductCommandHandler> logger)
+    (IDocumentSession session)
     : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
@@ -26,9 +26,6 @@ internal class CreateProductCommandHandler
         // First step: Create a new product entity from command object
         // Second step: Save it to the database
         // Third step: Return the CreateProductResult object
-
-        //Logging the command received
-        logger.LogInformation("Received CreateProductCommand: {@Command}", command);
 
         // First step:
         var product = new Product

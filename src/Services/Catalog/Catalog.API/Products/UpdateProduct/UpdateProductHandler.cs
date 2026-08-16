@@ -22,13 +22,11 @@ public class UpdateProductCommandValidator : AbstractValidator<UpdateProductComm
 }
 
 internal class UpdateProductCommandHandler
-    (IDocumentSession session, ILogger<UpdateProductCommandHandler> logger)
+    (IDocumentSession session)
     : ICommandHandler<UpdateProductCommand, UpdateProductResult>
 {
     public async Task<UpdateProductResult> Handle(UpdateProductCommand command, CancellationToken cancellationToken)
     {
-        logger.LogInformation("Handling UpdateProductCommand for Product Id: {ProductId}", command.Id);
-        
         // Implementation for handling the update product command
         // This is a placeholder - replace with actual logic
         var product = await session.LoadAsync<Product>(command.Id,cancellationToken);
