@@ -1,3 +1,5 @@
+using Discount.Grpc;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -33,6 +35,17 @@ builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration= builder.Configuration.GetConnectionString("Redis");
     //options.InstanceName = "Basket";
+});
+
+// gRPC client used to retrieve product discounts before storing a basket.
+builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options =>
+{
+    options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!);
+})
+.ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+{
+    ServerCertificateCustomValidationCallback =
+        HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
 });
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
