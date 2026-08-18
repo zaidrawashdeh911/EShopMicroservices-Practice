@@ -427,3 +427,7 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Discount gRPC local SQLite runtime files
+**/Discount.Grpc/discountdb
+**/Discount.Grpc/discountdb-*
