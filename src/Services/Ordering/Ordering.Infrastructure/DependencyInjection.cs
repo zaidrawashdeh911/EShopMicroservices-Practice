@@ -1,5 +1,5 @@
-﻿global using Microsoft.Extensions.Configuration;
-global using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Ordering.Infrastructure;
 
