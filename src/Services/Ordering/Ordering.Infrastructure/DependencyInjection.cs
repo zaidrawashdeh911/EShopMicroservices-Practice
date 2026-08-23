@@ -18,9 +18,18 @@ public static class DependencyInjection
         var connectionString = configuration.GetConnectionString("Database");
 
         // Add services to the container.
-        services.AddDbContext<ApplicationDbContext>((options) =>
+        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
+        services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
+
+        services.AddDbContext<ApplicationDbContext>((serviceProvider, options) =>
         {
-            options.AddInterceptors(new AuditableEntityInterceptor());
+            options.AddInterceptors(serviceProvider.GetServices<ISaveChangesInterceptor>());
+
+            //options.AddInterceptors(new AuditableEntityInterceptor());
+            //Wrong way because this needs to add MediatR in the parameter, and we'll implement MediatR in the Application Layer not Infrastructure Layer
+            //, new DispatchDomainEventsInterceptor());
+
+
             options.UseSqlServer(connectionString);
         });
 
