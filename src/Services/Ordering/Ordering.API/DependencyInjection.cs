@@ -7,7 +7,7 @@ public static class DependencyInjection
     public static IServiceCollection AddApiServices(this IServiceCollection services)
     {
         // Add Carter
-        //services.AddCarter();
+        services.AddCarter();
 
         // Add HealthChecks
         //services.AddHealthChecks();
@@ -19,7 +19,7 @@ public static class DependencyInjection
     public static WebApplication UseApiServices(this WebApplication app)
     {
         // Use Carter
-        //app.MapCarter();
+        app.MapCarter();
 
         // Use HealthChecks
         //app.MapHealthChecks("/health");
