@@ -1,4 +1,6 @@
 ﻿using BuildingBlocks.Exceptions.Handler;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 namespace Ordering.API;
 
@@ -6,7 +8,7 @@ public static class DependencyInjection
 {
     // This is an extension method for IServiceCollection to add API services
     // This is the part where its before the app is built, so we can add services to the DI container
-    public static IServiceCollection AddApiServices(this IServiceCollection services)
+    public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration configuration)
     {
         // Add Carter
         services.AddCarter();
@@ -14,7 +16,9 @@ public static class DependencyInjection
         services.AddExceptionHandler<CustomExceptionHandler>();
 
         // Add HealthChecks
-        //services.AddHealthChecks();
+        services.AddHealthChecks()
+            .AddSqlServer(configuration.GetConnectionString("Database")!);
+
         return services;
     }
 
@@ -28,7 +32,11 @@ public static class DependencyInjection
         app.UseExceptionHandler(options => { });
 
         // Use HealthChecks
-        //app.MapHealthChecks("/health");
+        app.UseHealthChecks("/health",
+             new HealthCheckOptions
+             {
+                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+             });
 
         return app;
     }
