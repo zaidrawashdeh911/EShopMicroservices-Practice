@@ -1,4 +1,6 @@
-﻿namespace Ordering.API;
+﻿using BuildingBlocks.Exceptions.Handler;
+
+namespace Ordering.API;
 
 public static class DependencyInjection
 {
@@ -8,6 +10,8 @@ public static class DependencyInjection
     {
         // Add Carter
         services.AddCarter();
+
+        services.AddExceptionHandler<CustomExceptionHandler>();
 
         // Add HealthChecks
         //services.AddHealthChecks();
@@ -20,6 +24,8 @@ public static class DependencyInjection
     {
         // Use Carter
         app.MapCarter();
+
+        app.UseExceptionHandler(options => { });
 
         // Use HealthChecks
         //app.MapHealthChecks("/health");
