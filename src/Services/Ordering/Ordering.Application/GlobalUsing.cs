@@ -10,3 +10,4 @@ global using Microsoft.Extensions.Logging;
 //global using Microsoft.FeatureManagement;
 global using Ordering.Domain.Events;
 global using Microsoft.EntityFrameworkCore;
+global using Ordering.Application.Extensions;

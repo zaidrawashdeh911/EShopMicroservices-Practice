@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Orders\Queries\GetOrdersByCustomer\" />
     <Folder Include="Orders\Queries\GetOrders\" />
   </ItemGroup>
 
